@@ -15,3 +15,5 @@ npm install
 ## References
 
 - https://hub.docker.com/_/mysql
+- https://stackabuse.com/converting-callbacks-to-promises-in-node-js/
+-
