@@ -11,3 +11,12 @@ docker-compose up -d
 
 npm install
 ```
+
+- ToLook
+  - Migrations
+  - Relationships
+  - Query Builder
+
+## References
+
+- https://typeorm.io/
