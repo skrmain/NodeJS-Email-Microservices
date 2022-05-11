@@ -2,7 +2,7 @@ import { join } from "path";
 import { createConnection } from "typeorm";
 
 export const connectMySQL = () => {
-    const entitiesPath = join(__dirname, "../entities/*.ts");
+    const entityPath = join(__dirname, "../entity/*.ts");
 
     return createConnection({
         type: "mysql",
@@ -11,7 +11,7 @@ export const connectMySQL = () => {
         username: "root",
         password: "admin",
         database: "learning",
-        entities: [entitiesPath],
+        entities: [entityPath],
         synchronize: true,
         logging: false,
     });

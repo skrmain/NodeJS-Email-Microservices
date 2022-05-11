@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getManager } from "typeorm";
 
-import { Product } from "../../entities/product.entity";
+import { Product } from "../../entity/product.entity";
 
 export const GetOneProductService = async (req: Request, res: Response) => {
     const productRepository = getManager().getRepository(Product);
