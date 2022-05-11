@@ -1,27 +1,27 @@
-import "reflect-metadata";
 import { config } from "dotenv";
 config({ path: "src/.env" });
+import "reflect-metadata";
 
 import express from "express";
 
 import { PORT } from "./constants";
-import ProductRoutes from "./api/routes/product.route";
-import UserRoutes from "./api/routes/user.route";
 import { connectMySQL } from "./utils";
 
-const app = express();
-
-app.use(express.json());
-
-app.get("/", (req, res) => {
-    res.send({ message: "Server is running" });
-});
+import ProductRoutes from "./api/routes/product.route";
+import UserRoutes from "./api/routes/user.route";
 
 (async () => {
     try {
+        const app = express();
+
         await connectMySQL();
         console.log("DB Connected");
 
+        app.use(express.json());
+
+        app.get("/", (req, res) => {
+            res.send({ message: "Server is running" });
+        });
         app.use("/api/user", UserRoutes);
         app.use("/api/product", ProductRoutes);
 
@@ -30,5 +30,6 @@ app.get("/", (req, res) => {
         });
     } catch (error) {
         console.log("ERROR : ", error);
+        process.exit(1);
     }
 })();

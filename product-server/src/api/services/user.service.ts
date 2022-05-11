@@ -27,21 +27,19 @@ export const AddNewUsersService = async (req: Request, res: Response) => {
     try {
         const userRepository = getManager().getRepository(User);
 
-        // Add incoming data validation
         const data = req.body;
-        console.log("Da ", data);
+
         const value: User = await UserSchema.validateAsync(data);
+        const user = new User();
 
-        const p1 = new User();
+        user.name = value.name;
+        user.email = value.email;
 
-        p1.name = value.name;
-        p1.email = value.email;
-
-        const savedUser = await userRepository.save(p1);
+        const savedUser = await userRepository.save(user);
 
         await sendMailMessageInQueue({
-            message: `This is a test mail from ${p1.name}`,
-            sender: p1.email,
+            message: `This is a test mail from ${user.name}`,
+            sender: user.email,
         });
 
         res.send({
