@@ -23,3 +23,5 @@ npm install
 - https://joi.dev/api/?v=17.6.0
 - https://www.npmjs.com/package/dotenv
 - https://github.com/nodemailer/nodemailer-amqp-example
+- https://nodemailer.com/about/
+- https://typeorm.io/validation
