@@ -3,6 +3,7 @@ import { getManager } from "typeorm";
 
 import { User } from "../../entity/user.entity";
 import { UserSchema } from "../../schema/user.schema";
+import { sendMailMessageInQueue } from "../../utils";
 
 export const GetOneUserService = async (req: Request, res: Response) => {
     const userRepository = getManager().getRepository(User);
@@ -37,6 +38,11 @@ export const AddNewUsersService = async (req: Request, res: Response) => {
         p1.email = value.email;
 
         const savedUser = await userRepository.save(p1);
+
+        await sendMailMessageInQueue({
+            message: `This is a test mail from ${p1.name}`,
+            sender: p1.email,
+        });
 
         res.send({
             message: "User saved",

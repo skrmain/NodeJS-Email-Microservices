@@ -1,0 +1,15 @@
+{
+    "name": "my-smtp-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "server": "node index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "smtp-server": "^3.11.0"
+    }
+}
