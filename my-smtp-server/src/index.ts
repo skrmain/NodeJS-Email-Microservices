@@ -1,7 +1,7 @@
-"use strict";
+import { SMTPServer } from "smtp-server";
 
-const config = require("./config");
-const SMTPServer = require("smtp-server").SMTPServer;
+const PORT = process.env.PORT || 12345;
+// const HOSTNAME = process.env.HOSTNAME || "127.0.0.1";
 
 // Setup server
 const server = new SMTPServer({
@@ -20,6 +20,10 @@ const server = new SMTPServer({
     // Setup authentication
     // Allow all usernames and passwords, no account checking
     onAuth(auth, session, callback) {
+        console.log("AUth ", auth.username);
+        console.log("AUth ", auth.password);
+        // console.log("AUth ", session);
+
         return callback(null, {
             user: {
                 username: auth.username,
@@ -29,12 +33,13 @@ const server = new SMTPServer({
 
     // Handle message stream
     onData(stream, session, callback) {
-        console.log("Streaming message from user %s", session.user.username);
+        console.log("Streaming message from user %s", session?.user);
         console.log("------------------");
         stream.pipe(process.stdout);
         stream.on("end", () => {
-            console.log(""); // ensure linebreak after the message
-            callback(null, "Message queued as " + Date.now()); // accept the message once the stream is ended
+            console.log(""); // ensure line-break after the message
+            callback(null); // accept the message once the stream is ended
+            // "Message queued as " + Date.now()
         });
     },
 });
@@ -45,6 +50,6 @@ server.on("error", (err) => {
 });
 
 // start listening
-server.listen(config.server.port, config.server.host, () => {
-    console.log("Server Running on 12345");
+server.listen(PORT, () => {
+    console.log(`Server Running on ${PORT}`);
 });
