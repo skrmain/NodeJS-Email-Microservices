@@ -20,3 +20,5 @@ npm install
 ## References
 
 - https://typeorm.io/
+- https://joi.dev/api/?v=17.6.0
+- https://www.npmjs.com/package/dotenv

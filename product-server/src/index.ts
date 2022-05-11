@@ -1,4 +1,7 @@
 import "reflect-metadata";
+import { config } from "dotenv";
+config({ path: "src/.env" });
+
 import express from "express";
 
 import { PORT } from "./constants";
