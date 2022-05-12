@@ -18,10 +18,22 @@
             "outFiles": [
                 "${workspaceFolder}/product-server/dist/**"
             ],
-            "env": {
-                "RMQ_URL": "amqp://admin:admin@localhost",
-                "RMQ_QUEUE": "nodemailer-amqp"
-            }
+            "envFile": "${workspaceFolder}/product-server/src/.env"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug <Email-Service>",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "sourceMaps": true,
+            "program": "${workspaceFolder}/email-service/src/index.ts",
+            "preLaunchTask": "tsc: build - email-service/tsconfig.json",
+            "outFiles": [
+                "${workspaceFolder}/email-service/dist/**"
+            ],
+            "envFile": "${workspaceFolder}/email-service/src/.env"
         }
     ]
 }

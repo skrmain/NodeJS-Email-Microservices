@@ -9,13 +9,10 @@ mkdir -p docker-data/mysql_data
 # - Start the mongodb server using docker-compose
 docker-compose up -d
 
-npm install
-```
+docker-compose down
 
-- ToLook
-  - Migrations
-  - Relationships
-  - Query Builder
+docker-compose logs -f <SERVICE_NAME>
+```
 
 ## References
 
