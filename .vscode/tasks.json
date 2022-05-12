@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "product-server",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - product-server",
+			"detail": "rm -r dist && tsc --project ./"
+		}
+	]
+}

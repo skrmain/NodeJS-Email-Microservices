@@ -7,7 +7,8 @@ const RMQ_URL = process.env.RMQ_URL || "amqp://localhost";
 const RMQ_QUEUE = process.env.RMQ_QUEUE || "development";
 
 export const connectMySQL = () => {
-    const entityPath = join(__dirname, "../entity/*.ts");
+    const entityPathTS = join(__dirname, "../entity/*.ts");
+    const entityPathJS = join(__dirname, "../entity/*.js");
 
     return createConnection({
         type: "mysql",
@@ -16,7 +17,7 @@ export const connectMySQL = () => {
         username: "root",
         password: "admin",
         database: "learning",
-        entities: [entityPath],
+        entities: [entityPathTS, entityPathJS],
         synchronize: true,
         logging: false,
     });
