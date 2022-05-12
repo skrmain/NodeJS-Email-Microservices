@@ -5,6 +5,10 @@ import { connect } from "amqplib/callback_api";
 
 const RMQ_URL = process.env.RMQ_URL || "amqp://localhost";
 const RMQ_QUEUE = process.env.RMQ_QUEUE || "development";
+const MYSQL_HOSTNAME = process.env.MYSQL_HOSTNAME || "localhost";
+const MYSQL_USER = process.env.MYSQL_USER || "root";
+const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || "root";
+const MYSQL_DATABASE = process.env.MYSQL_DATABASE || "test";
 
 export const connectMySQL = () => {
     const entityPathTS = join(__dirname, "../entity/*.ts");
@@ -12,11 +16,11 @@ export const connectMySQL = () => {
 
     return createConnection({
         type: "mysql",
-        host: "localhost",
+        host: MYSQL_HOSTNAME,
         port: 3306,
-        username: "root",
-        password: "admin",
-        database: "learning",
+        username: MYSQL_USER,
+        password: MYSQL_PASSWORD,
+        database: MYSQL_DATABASE,
         entities: [entityPathTS, entityPathJS],
         synchronize: true,
         logging: false,

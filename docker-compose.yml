@@ -21,3 +21,47 @@ services:
         ports:
             - 5672:5672 # AMQP protocol port
             - 15672:15672 # HTTP management UI
+
+    email-service:
+        build:
+            context: ./email-service/
+            dockerfile: Dockerfile
+        volumes:
+            - ./email-service/src:/app/src
+        environment:
+            - RMQ_URL=amqp://admin:admin@rabbitmq
+            - RMQ_QUEUE=nodemailer-amqp
+            - SMTP_PORT=12345
+            - SMTP_HOSTNAME=my-smtp-server
+        depends_on:
+            - mysql
+            - rabbitmq
+            - my-smtp-server
+
+    my-smtp-server:
+        build:
+            context: ./my-smtp-server/
+            dockerfile: Dockerfile
+        volumes:
+            - ./my-smtp-server/src:/app/src
+        ports:
+            - 12345:12345
+
+    product-server:
+        build:
+            context: ./product-server/
+            dockerfile: Dockerfile
+        volumes:
+            - ./product-server/src:/app/src
+        ports:
+            - 8000:8000
+        environment:
+            - RMQ_URL=amqp://admin:admin@rabbitmq
+            - RMQ_QUEUE=nodemailer-amqp
+            - MYSQL_HOSTNAME=mysql
+            - MYSQL_USER=root
+            - MYSQL_PASSWORD=admin
+            - MYSQL_DATABASE=learning
+        depends_on:
+            - mysql
+            - rabbitmq
