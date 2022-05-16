@@ -19,6 +19,7 @@ services:
             - 6379:6379
         volumes:
             - ./docker-data/redis_data:/data
+
     mongodb:
         image: mongo
         restart: always
@@ -27,5 +28,5 @@ services:
         volumes:
             - ./docker-data/mongodb_data:/data/db/
         environment:
-        MONGO_INITDB_ROOT_USERNAME: admin
-        MONGO_INITDB_ROOT_PASSWORD: admin
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: admin

@@ -31,3 +31,13 @@ npm install
 > ESLint
 
 - https://eslint.org/docs/user-guide/getting-started
+
+> Redis
+
+```ts
+// - Setting Expiry
+// - https://redis.io/commands/expire/#options
+await this.client.set('name', 'Admin', {
+  EX: 10,
+});
+```

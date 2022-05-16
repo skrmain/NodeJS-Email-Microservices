@@ -12,6 +12,7 @@ class RedisProductModel {
         if (instance) {
             throw new Error('Can not re instantiate');
         }
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         instance = this;
 
         this.client = createClient({
