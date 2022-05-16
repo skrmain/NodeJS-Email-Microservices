@@ -12,6 +12,9 @@ docker-compose up -d
 docker-compose down
 
 docker-compose logs -f <SERVICE_NAME>
+
+# Migration Command
+npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:show
 ```
 
 ## References

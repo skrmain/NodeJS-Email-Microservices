@@ -22,7 +22,7 @@ export const connectMySQL = () => {
         password: MYSQL_PASSWORD,
         database: MYSQL_DATABASE,
         entities: [entityPathTS, entityPathJS],
-        synchronize: true,
+        synchronize: false,
         logging: false,
     });
 };
