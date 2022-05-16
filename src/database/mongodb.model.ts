@@ -8,10 +8,12 @@ interface Product {
     category: string;
 }
 
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017';
+
 const collections: { Product?: Collection<Product> } = {};
 
 const connectDB = async () => {
-    const client = new MongoClient('mongodb://admin:admin@localhost:27017');
+    const client = new MongoClient(MONGODB_URL);
 
     await client.connect();
 
