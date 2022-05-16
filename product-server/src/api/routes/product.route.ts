@@ -69,12 +69,135 @@ class ProductRouter {
     }
 
     private mountRoutes() {
-        this.router.post("/", this.addNewProductsService);
-        this.router.get("/", this.getAllProductsService);
+        this.router.post("", this.addNewProductsService);
+        this.router.get("", this.getAllProductsService);
         this.router.get("/:id", this.getOneProductService);
         this.router.patch("/:id", this.updateProductsService);
-        this.router.delete("/:id");
+        this.router.delete("/:id", this.deleteProductsService);
     }
 }
 
 export = new ProductRouter().router;
+
+/**
+ * @swagger
+ * /api/product/{id}:
+ *  get:
+ *   summary: get product info
+ *   description: api to get the detail of a product
+ *   tags: [Get detail by id]
+ *   consumes:
+ *      application/json
+ *   produce:
+ *      application/json
+ *   parameters:
+ *       - in: path
+ *         name: id
+ *         type: string
+ *         required: true
+ *   responses:
+ *    '200':
+ *      description: success
+ */
+
+/**
+ * @swagger
+ * /api/product:
+ *  get:
+ *   summary: get products
+ *   description: api to get products
+ *   tags: [Get Products]
+ *   consumes:
+ *      application/json
+ *   produce:
+ *      application/json
+ *   responses:
+ *    '200':
+ *      description: success
+ */
+
+/**
+ * @swagger
+ * /api/product:
+ *  post:
+ *   summary: add new product
+ *   description: api to add new product
+ *   tags: [Add New]
+ *   consumes:
+ *      application/json
+ *   produce:
+ *      application/json
+ *   requestBody:
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        properties:
+ *         name:
+ *          type: string
+ *         price:
+ *          type: number
+ *         category:
+ *          type: string
+ *         description:
+ *          type: string
+ *   responses:
+ *    '200':
+ *      description: success
+ */
+
+/**
+ * @swagger
+ * /api/product/{id}:
+ *  patch:
+ *   summary: update product by id
+ *   description: api to update the product details
+ *   tags: [Update Product by id]
+ *   consumes:
+ *      application/json
+ *   produce:
+ *      application/json
+ *   parameters:
+ *       - in: path
+ *         name: id
+ *         type: string
+ *         required: true
+ *   requestBody:
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        properties:
+ *         name:
+ *          type: string
+ *         price:
+ *          type: number
+ *         category:
+ *          type: string
+ *         description:
+ *          type: string
+ *   responses:
+ *    '200':
+ *      description: success
+ */
+
+/**
+ * @swagger
+ * /api/product/{id}:
+ *  delete:
+ *   summary: delete product by id
+ *   description: api to delete the product details
+ *   tags: [Delete Product by id]
+ *   consumes:
+ *      application/json
+ *   produce:
+ *      application/json
+ *   parameters:
+ *       - in: path
+ *         name: id
+ *         type: string
+ *         required: true
+ *   responses:
+ *    '200':
+ *      description: success
+ */

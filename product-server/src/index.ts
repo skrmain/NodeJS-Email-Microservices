@@ -3,12 +3,16 @@ config({ path: "src/.env" });
 import "reflect-metadata";
 
 import express from "express";
+import cors from "cors";
+
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 import { PORT } from "./constants";
 import { connectMySQL } from "./utils";
 
-import ProductRoutes from "./api/routes/product.route";
-import UserRoutes from "./api/routes/user.route";
+import { SwaggerConfig } from "./config/swagger";
+import BaseRoute from "./api/routes/index.route";
 
 (async () => {
     try {
@@ -18,12 +22,15 @@ import UserRoutes from "./api/routes/user.route";
         console.log("DB Connected");
 
         app.use(express.json());
+        app.use(cors());
 
         app.get("/", (req, res) => {
             res.send({ message: "Server is running" });
         });
-        app.use("/api/user", UserRoutes);
-        app.use("/api/product", ProductRoutes);
+        app.use("/api", BaseRoute);
+
+        const swaggerDocs = swaggerJSDoc(SwaggerConfig);
+        app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
         app.listen(PORT, () => {
             console.log(`Server running on ${PORT}`);
