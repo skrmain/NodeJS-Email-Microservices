@@ -3,89 +3,72 @@ import { getManager } from "typeorm";
 
 import { Product } from "../../entity/product.entity";
 
-export const GetOneProductService = async (req: Request, res: Response) => {
-    const productRepository = getManager().getRepository(Product);
+export class ProductService {
+    async getOneProductService(id: any) {
+        const productRepository = getManager().getRepository(Product);
 
-    const id = req.params.id;
+        const product = await productRepository.findOne(id);
+        return product;
+    }
 
-    const product = await productRepository.findOne(id);
+    async getAllProductsService() {
+        const productRepository = getManager().getRepository(Product);
 
-    res.send({ message: "product detail", status: "success", data: product });
-};
+        const products = await productRepository.find();
 
-export const GetAllProductsService = async (req: Request, res: Response) => {
-    const productRepository = getManager().getRepository(Product);
+        return products;
+    }
 
-    const products = await productRepository.find();
+    async addNewProductsService(data: any) {
+        const productRepository = getManager().getRepository(Product);
 
-    res.send({ message: "product list", status: "success", data: products });
-};
+        // Add incoming data validation
+        // const data = req.body;
 
-export const AddNewProductsService = async (req: Request, res: Response) => {
-    const productRepository = getManager().getRepository(Product);
+        const p1 = new Product();
+        console.log("Da ", data);
 
-    // Add incoming data validation
-    const data = req.body;
-
-    const p1 = new Product();
-    console.log("Da ", data);
-
-    p1.name = data.name;
-    p1.price = data.price;
-    p1.category = data.category;
-    p1.description = data.description;
-
-    const savedProduct = await productRepository.save(p1);
-
-    res.send({
-        message: "product saved",
-        status: "success",
-        data: savedProduct,
-    });
-};
-
-export const UpdateProductsService = async (req: Request, res: Response) => {
-    const productRepository = getManager().getRepository(Product);
-
-    // Add incoming data validation
-    const data = req.body;
-    const id = req.params.id;
-
-    const p1 = new Product();
-    console.log("Da ", data);
-
-    if (data.name) {
         p1.name = data.name;
-    }
-    if (data.price) {
         p1.price = data.price;
-    }
-    if (data.category) {
         p1.category = data.category;
-    }
-    if (data.description) {
         p1.description = data.description;
+
+        const savedProduct = await productRepository.save(p1);
+
+        return savedProduct;
     }
 
-    const savedProduct = await productRepository.update(id, p1);
+    async updateProductsService(data: any, id: any) {
+        const productRepository = getManager().getRepository(Product);
 
-    res.send({
-        message: "product updated",
-        status: "success",
-        data: savedProduct,
-    });
-};
+        // Add incoming data validation
 
-export const DeleteProductsService = async (req: Request, res: Response) => {
-    const productRepository = getManager().getRepository(Product);
+        const p1 = new Product();
+        console.log("Da ", data);
 
-    const id = req.params.id;
+        if (data.name) {
+            p1.name = data.name;
+        }
+        if (data.price) {
+            p1.price = data.price;
+        }
+        if (data.category) {
+            p1.category = data.category;
+        }
+        if (data.description) {
+            p1.description = data.description;
+        }
 
-    const savedProduct = await productRepository.delete(id);
+        const savedProduct = await productRepository.update(id, p1);
 
-    res.send({
-        message: "product deleted",
-        status: "success",
-        data: savedProduct,
-    });
-};
+        return savedProduct;
+    }
+
+    deleteProductsService = async (id: any) => {
+        const productRepository = getManager().getRepository(Product);
+
+        const deletedInfo = await productRepository.delete(id);
+
+        return deletedInfo;
+    };
+}
