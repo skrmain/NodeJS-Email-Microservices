@@ -14,6 +14,8 @@ import { ddbClient, ddbDocClient } from "./../database/dynamodb";
 
 // Set the parameters
 
+export const TABLE_NAME = "TEST_TABLE";
+
 export const createDBTable = async () => {
   const params = {
     AttributeDefinitions: [
@@ -40,7 +42,7 @@ export const createDBTable = async () => {
       ReadCapacityUnits: 1,
       WriteCapacityUnits: 1,
     },
-    TableName: "TEST_TABLE", //TABLE_NAME
+    TableName: TABLE_NAME, //TABLE_NAME
     StreamSpecification: {
       StreamEnabled: false,
     },
@@ -54,13 +56,13 @@ export const listDBTables = async () => {
 
 export const insertIntoDB = async () => {
   const params = {
-    TableName: "TEST_TABLE",
+    TableName: TABLE_NAME,
     Item: {
       Season: 1,
-      Episode: 1,
+      Episode: 3,
       Data: {
-        name: "Iron Man 1",
-        year: 2012,
+        name: "Iron Man 3",
+        year: 2018,
       },
     },
   };
@@ -70,7 +72,7 @@ export const insertIntoDB = async () => {
 export const getAllItemsFromDB = async () => {
   return await ddbDocClient.send(
     new ScanCommand({
-      TableName: "TEST_TABLE",
+      TableName: TABLE_NAME,
     })
   );
 };
@@ -78,7 +80,7 @@ export const getAllItemsFromDB = async () => {
 export const updateItemInDB = async () => {
   return await ddbDocClient.send(
     new PutCommand({
-      TableName: "TEST_TABLE",
+      TableName: TABLE_NAME,
       Item: {
         Season: 1,
         Episode: 1,
