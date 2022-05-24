@@ -9,9 +9,10 @@
 
 > DynamoDB
 
-- Install: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html#DynamoDBLocal.DownloadingAndRunning.title
-- Doc: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.UsageNotes.html
-- Doc AWS CLI + DynamoDB: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.CLI.html
+- Developer Guide: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html
+  - Install: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html#DynamoDBLocal.DownloadingAndRunning.title
+  - Doc AWS CLI + DynamoDB: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.CLI.html
+- API References: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html
 - https://askubuntu.com/questions/25347/what-command-do-i-need-to-unzip-extract-a-tar-gz-file
 - Java Install: - https://ubuntu.com/tutorials/install-jre#1-overview
 - AWS CLI Install: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#cliv2-linux-install
