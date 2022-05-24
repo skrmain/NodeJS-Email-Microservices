@@ -2,6 +2,8 @@
 
 ## Notes
 
+> ELK Install
+
 - https://stackoverflow.com/questions/51445846/elasticsearch-max-virtual-memory-areas-vm-max-map-count-65530-is-too-low-inc
 - https://www.elastic.co/guide/en/elastic-stack-get-started/current/get-started-stack-docker.html
 
@@ -12,6 +14,17 @@
 # P- admin@123
 ```
 
+> NPM Package
+
+- https://github.com/elastic/elasticsearch-js
+- DOCS: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html
+
 ## Flow
 
 - error-log-service(nodejs) --> Local ELK Stack --> Kibana
+
+> 1- Push Data to ELastic Search
+
+> 2- Add Data view for the index
+
+> 3- We can now Explore the Data in - Analytics/Discover or we can create Dashboards
