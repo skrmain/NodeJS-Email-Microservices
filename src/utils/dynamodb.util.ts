@@ -2,74 +2,41 @@ import {
   CreateTableCommand,
   ListTablesCommand,
 } from "@aws-sdk/client-dynamodb";
-import {
-  DeleteCommand,
-  GetCommand,
-  PutCommand,
-  ScanCommand,
-  UpdateCommand,
-} from "@aws-sdk/lib-dynamodb";
+import { DeleteCommand, PutCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
 
 import { ddbClient, ddbDocClient } from "./../database/dynamodb";
+import { ProductSchemaDDB, TABLE_NAME } from "../schema/product.schema";
+import { ProductType } from "./../types/product.type";
 
-// Set the parameters
-
-export const TABLE_NAME = "TEST_TABLE";
-
-export const createDBTable = async () => {
-  const params = {
-    AttributeDefinitions: [
-      {
-        AttributeName: "Season", //ATTRIBUTE_NAME_1
-        AttributeType: "N", //ATTRIBUTE_TYPE
-      },
-      {
-        AttributeName: "Episode", //ATTRIBUTE_NAME_2
-        AttributeType: "N", //ATTRIBUTE_TYPE
-      },
-    ],
-    KeySchema: [
-      {
-        AttributeName: "Season", //ATTRIBUTE_NAME_1
-        KeyType: "HASH",
-      },
-      {
-        AttributeName: "Episode", //ATTRIBUTE_NAME_2
-        KeyType: "RANGE",
-      },
-    ],
-    ProvisionedThroughput: {
-      ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1,
-    },
-    TableName: TABLE_NAME, //TABLE_NAME
-    StreamSpecification: {
-      StreamEnabled: false,
-    },
-  };
-  return await ddbClient.send(new CreateTableCommand(params));
+export const createTable = async () => {
+  return await ddbClient.send(new CreateTableCommand(ProductSchemaDDB));
 };
 
-export const listDBTables = async () => {
+export const listTables = async () => {
   return await ddbClient.send(new ListTablesCommand({}));
 };
 
-export const insertIntoDB = async () => {
+export const updateOrAddItem = async ({
+  Id,
+  category,
+  name,
+  price,
+  dateEdited,
+}: ProductType) => {
   const params = {
     TableName: TABLE_NAME,
     Item: {
-      Season: 1,
-      Episode: 3,
-      Data: {
-        name: "Iron Man 3",
-        year: 2018,
-      },
+      Id,
+      category,
+      name,
+      price,
+      dateEdited,
     },
   };
   return ddbDocClient.send(new PutCommand(params));
 };
 
-export const getAllItemsFromDB = async () => {
+export const getAllItems = async () => {
   return await ddbDocClient.send(
     new ScanCommand({
       TableName: TABLE_NAME,
@@ -77,29 +44,13 @@ export const getAllItemsFromDB = async () => {
   );
 };
 
-export const updateItemInDB = async () => {
-  return await ddbDocClient.send(
-    new PutCommand({
-      TableName: TABLE_NAME,
-      Item: {
-        Season: 1,
-        Episode: 1,
-        Data: {
-          name: "Marvel - Iron Man I",
-          year: 2012,
-        },
-      },
-    })
-  );
-};
-
-export const deleteItemInDB = async () => {
+export const deleteItem = async (Id: string, dateEdited: string) => {
   return await ddbDocClient.send(
     new DeleteCommand({
-      TableName: "TEST_TABLE",
+      TableName: TABLE_NAME,
       Key: {
-        Season: 1,
-        Episode: 1,
+        Id,
+        dateEdited,
       },
     })
   );
