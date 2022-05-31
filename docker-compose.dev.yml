@@ -1,0 +1,7 @@
+services:
+    product-server:
+        build:
+            context: ./product-server/
+            dockerfile: Dockerfile
+        volumes:
+            - ./product-server/src:/app/src

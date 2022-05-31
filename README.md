@@ -6,11 +6,19 @@
 # - Create Folder for docker data
 mkdir -p docker-data/mysql_data
 
-# - Start the mongodb server using docker-compose
-docker-compose up -d
+# To run in development mode
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 
+# To create images for Production
+docker-compose -f docker-compose.yml -f docker-compose.build.yml up -d
+
+# To run production images
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+# To stop and remove active containers
 docker-compose down
 
+# To see logs
 docker-compose logs -f <SERVICE_NAME>
 
 # Migration Command

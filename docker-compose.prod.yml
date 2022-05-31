@@ -1,0 +1,3 @@
+services:
+    product-server:
+        image: product-microservices_product-server

@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "nodemon src/index.ts",
         "start": "node dist/index.js",
-        "build": "rm -r dist && tsc --project ./",
+        "build": "tsc --project ./",
         "mig": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run"
     },
     "keywords": [],

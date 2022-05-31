@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
     mysql:
         image: mysql
@@ -48,11 +46,12 @@ services:
             - 12345:12345
 
     product-server:
-        build:
-            context: ./product-server/
-            dockerfile: Dockerfile
-        volumes:
-            - ./product-server/src:/app/src
+        # build:
+        #     context: ./product-server/
+        #     dockerfile: Dockerfile
+        # image: product-server:prod
+        # volumes:
+        #     - ./product-server/src:/app/src
         ports:
             - 8000:8000
         environment:
