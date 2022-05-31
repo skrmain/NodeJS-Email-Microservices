@@ -23,6 +23,12 @@ docker-compose -f docker-compose.yml -f docker-compose.<>.yml logs -f <SERVICE_N
 
 # Migration Command
 npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:show
+
+# To tag the docker image
+docker tag <Existing_Name> <username>/<New_Name>:tag
+
+# To push the image to docker hub
+docker push <Image_Name>
 ```
 
 ## References
