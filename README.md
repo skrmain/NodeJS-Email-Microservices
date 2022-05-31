@@ -16,10 +16,10 @@ docker-compose -f docker-compose.yml -f docker-compose.build.yml up -d
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
 # To stop and remove active containers
-docker-compose down
+docker-compose -f docker-compose.yml -f docker-compose.<>.yml down
 
 # To see logs
-docker-compose logs -f <SERVICE_NAME>
+docker-compose -f docker-compose.yml -f docker-compose.<>.yml logs -f <SERVICE_NAME>
 
 # Migration Command
 npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:show
