@@ -39,3 +39,7 @@ docker push <Image_Name>
 - https://github.com/nodemailer/nodemailer-amqp-example
 - https://nodemailer.com/about/
 - https://typeorm.io/validation
+
+## Flow Chart
+
+![Microservices Flow Chart](./Product-Microservices-Flow.png)
