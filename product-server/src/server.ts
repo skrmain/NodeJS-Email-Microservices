@@ -20,6 +20,12 @@ class App {
         this.app.use(express.static("public"));
         this.app.use(express.json());
 
+        this.app.use((req, res, next)=>{
+            console.log(`${req.method} : ${req.path}`);
+
+            next();
+        })
+
         this.app.get("/", (req, res) => {
             res.send({ message: "Server is running" });
         });
