@@ -58,6 +58,7 @@ services:
             - RMQ_URL=amqp://admin:admin@rabbitmq
             - RMQ_QUEUE=nodemailer-amqp
             - MYSQL_HOSTNAME=mysql
+            - MYSQL_PORT=3306
             - MYSQL_USER=root
             - MYSQL_PASSWORD=admin
             - MYSQL_DATABASE=learning

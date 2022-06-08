@@ -6,6 +6,7 @@ import { connect } from "amqplib/callback_api";
 const RMQ_URL = process.env.RMQ_URL || "amqp://localhost";
 const RMQ_QUEUE = process.env.RMQ_QUEUE || "development";
 const MYSQL_HOSTNAME = process.env.MYSQL_HOSTNAME || "localhost";
+const MYSQL_PORT = parseInt(process.env.MYSQL_PORT || "3306");
 const MYSQL_USER = process.env.MYSQL_USER || "root";
 const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || "root";
 const MYSQL_DATABASE = process.env.MYSQL_DATABASE || "test";
@@ -17,7 +18,7 @@ export const connectMySQL = () => {
     return createConnection({
         type: "mysql",
         host: MYSQL_HOSTNAME,
-        port: 3306,
+        port: MYSQL_PORT,
         username: MYSQL_USER,
         password: MYSQL_PASSWORD,
         database: MYSQL_DATABASE,
