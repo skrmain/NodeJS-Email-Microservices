@@ -45,7 +45,7 @@ const addProduct = (con: Connection) => {
 };
 
 const getAll = (con: Connection) => {
-    const sql = `SELECT * FROM products;`;
+    const sql = 'SELECT * FROM products;';
     return query(con, sql);
 };
 
