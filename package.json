@@ -1,5 +1,5 @@
 {
-    "name": "product-crud",
+    "name": "nodejs-db-crud",
     "version": "1.0.0",
     "main": "dist/index.js",
     "scripts": {
@@ -29,6 +29,8 @@
         "dotenv": "^16.0.1",
         "mongodb": "^4.6.0",
         "mysql": "^2.18.1",
-        "redis": "^4.1.0"
+        "redis": "^4.1.0",
+        "@aws-sdk/client-dynamodb": "^3.95.0",
+        "@aws-sdk/lib-dynamodb": "^3.95.0"
     }
 }
