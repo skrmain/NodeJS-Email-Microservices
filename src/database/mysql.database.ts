@@ -1,5 +1,29 @@
 import { Connection, createConnection } from 'mysql';
 
+// CREATE DATABASE test;
+
+// USE test;
+
+// CREATE TABLE student (
+//   name VARCHAR(20),
+//   rollno INT
+// );
+
+// const conn = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'root',
+//     database: 'test',
+// });
+
+// conn.connect((err) => {
+//     conn.query(`show tables;`, (err, result) => {
+//         if (err) throw err;
+//         console.log(result);
+//         conn.end();
+//     });
+// });
+
 const con = createConnection({
     host: 'localhost',
     user: 'root',

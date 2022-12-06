@@ -1,4 +1,4 @@
-# Product CRUD
+# NodeJS-DB-CRUD
 
 ## Notes
 
@@ -15,12 +15,6 @@ npm install
 ## References
 
 - https://stackabuse.com/converting-callbacks-to-promises-in-node-js/
-
-> MongoDB
-
-- https://www.mongodb.com/compatibility/using-typescript-with-mongodb-tutorial
-- https://github.com/mongodb-developer/mongodb-typescript-example/tree/finish
-- https://www.mongodb.com/docs/drivers/node/current/usage-examples/findOne/
 
 > Prettier
 
@@ -39,7 +33,6 @@ await this.client.set('name', 'Admin', {
   EX: 10,
 });
 ```
-
 
 ## DynamoDB
 
@@ -67,3 +60,25 @@ await this.client.set('name', 'Admin', {
 - CRUD - https://devapt.com/dynamodb-nodejs-crud
 - CRUD API - https://codezup.com/integrate-aws-dynamodb-with-node-js-crud-operations/
 - https://youtu.be/2k2GINpO308
+
+## MongoDB/Mongoose
+
+- [https://www.mongodb.com/docs/drivers/node/current/](https://www.mongodb.com/docs/drivers/node/current/)
+- [https://mongoosejs.com/docs/guide.html](https://mongoosejs.com/docs/guide.html)
+- https://www.mongodb.com/compatibility/using-typescript-with-mongodb-tutorial
+- https://github.com/mongodb-developer/mongodb-typescript-example/tree/finish
+
+## MySQL
+
+```sh
+npm i mysql
+npm i mysql2 # support promises
+```
+
+- [https://www.npmjs.com/package/mysql2](https://www.npmjs.com/package/mysql2)
+- [https://sequelize.org/master/manual/getting-started.html](https://sequelize.org/master/manual/getting-started.html)
+- [https://www.npmjs.com/package/mysql2](https://www.npmjs.com/package/mysql2)
+- [https://www.npmjs.com/package/mysql](https://www.npmjs.com/package/mysql)
+- [https://www.w3schools.com/nodejs/nodejs_mysql.asp](https://www.w3schools.com/nodejs/nodejs_mysql.asp)
+- [https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server](https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server)
+- [https://dev.mysql.com/doc/relnotes/connector-nodejs/en/](https://dev.mysql.com/doc/relnotes/connector-nodejs/en/)
