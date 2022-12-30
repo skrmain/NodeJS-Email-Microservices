@@ -82,3 +82,14 @@ npm i mysql2 # support promises
 - [https://www.w3schools.com/nodejs/nodejs_mysql.asp](https://www.w3schools.com/nodejs/nodejs_mysql.asp)
 - [https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server](https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server)
 - [https://dev.mysql.com/doc/relnotes/connector-nodejs/en/](https://dev.mysql.com/doc/relnotes/connector-nodejs/en/)
+
+## Elastic Search
+
+> NPM Package
+
+- https://github.com/elastic/elasticsearch-js
+- DOCS: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html
+
+> Elastic Search Integration with Winston
+
+- https://dev.to/deleteman123/logging-at-scale-done-right-3m0e
