@@ -5,29 +5,18 @@ const PORT = process.env.PORT || 12345;
 
 // Setup server
 const server = new SMTPServer({
-    // log to console
-    logger: false,
-
-    // not required but nice-to-have
+    logger: false, // log to console
     banner: "Welcome to My Awesome SMTP Server",
+    disabledCommands: ["STARTTLS"], // disable STARTTLS to allow authentication in clear text mode
+    size: 10 * 1024 * 1024, // Accept messages up to 10 MB. This is a soft limit
 
-    // disable STARTTLS to allow authentication in clear text mode
-    disabledCommands: ["STARTTLS"],
-
-    // Accept messages up to 10 MB. This is a soft limit
-    size: 10 * 1024 * 1024,
-
-    // Setup authentication
-    // Allow all usernames and passwords, no account checking
+    // Setup authentication -- Allow all usernames and passwords, no account checking
     onAuth(auth, session, callback) {
-        console.log("AUth ", auth.username);
-        console.log("AUth ", auth.password);
+        console.log("AUth ", auth);
         // console.log("AUth ", session);
 
         return callback(null, {
-            user: {
-                username: auth.username,
-            },
+            user: { username: auth.username },
         });
     },
 
@@ -45,11 +34,7 @@ const server = new SMTPServer({
 });
 
 server.on("error", (err) => {
-    console.log("Error occurred");
-    console.log(err);
+    console.log("[Error] ", err);
 });
 
-// start listening
-server.listen(PORT, () => {
-    console.log(`Server Running on ${PORT}`);
-});
+server.listen(PORT, () => console.log(`Listening on ${PORT}`));
