@@ -6,29 +6,33 @@ const SMTP_PORT = parseInt(process.env.SMTP_PORT || "12345");
 const SMTP_HOSTNAME = process.env.SMTP_HOSTNAME || "127.0.0.1";
 const RMQ_URL = process.env.RMQ_URL || "amqp://localhost";
 
-export const getMailTransport = () => {
-    // Setup Nodemailer transport
-    const transport = createTransport(
-        {
-            host: SMTP_HOSTNAME,
-            // port: config.server.port,
-            port: SMTP_PORT,
+const transport = createTransport(
+    {
+        host: SMTP_HOSTNAME,
+        port: SMTP_PORT,
+        // Security options to disallow using attachments from file or URL
+        disableFileAccess: true,
+        disableUrlAccess: true,
+    },
+    {
+        // Default options for the message. Used if specific values are not set
+        from: "sender@example.com",
+    }
+);
 
-            // we intentionally do not set any authentication
-            // options here as we are going to use message specific
-            // credentials
+// export const getMailTransport = () => transport;
 
-            // Security options to disallow using attachments from file or URL
-            disableFileAccess: true,
-            disableUrlAccess: true,
-        },
-        {
-            // Default options for the message. Used if specific values are not set
-            from: "sender@example.com",
-        }
-    );
-
-    return transport;
+/**
+ * Send the message using Nodemailer transport
+ * @param message -
+ * @returns
+ */
+export const sendMail = (message: any) => {
+    try {
+        return transport.sendMail(message);
+    } catch (error) {
+        console.log("[sendMail][Error]", error);
+    }
 };
 
 export const getRMQConnection = () => {
