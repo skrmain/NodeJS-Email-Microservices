@@ -3,5 +3,6 @@
         "RABBITMQ",
         "tsoa",
         "typeorm"
-    ]
+    ],
+    "editor.formatOnSave": true
 }
