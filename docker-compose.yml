@@ -6,7 +6,7 @@ services:
             - RABBITMQ_DEFAULT_USER=admin
             - RABBITMQ_DEFAULT_PASS=admin
         ports:
-            - 5672:5672 # AMQP protocol port
+            # - 5672:5672 # AMQP protocol port
             - 15672:15672 # HTTP management UI
 
     email-service:
@@ -16,10 +16,10 @@ services:
         volumes:
             - ./email-service/src:/app/src
         environment:
-            - QUEUE_URL=amqp://admin:admin@rabbitmq
-            - QUEUE=nodemailer-amqp
-            - SMTP_PORT=12345
-            - SMTP_HOSTNAME=my-smtp-server
+            - QUEUE_URL
+            - QUEUE
+            - SMTP_SERVER_PORT
+            - SMTP_SERVER_HOSTNAME
         depends_on:
             - rabbitmq
             - my-smtp-server
@@ -30,8 +30,6 @@ services:
             dockerfile: Dockerfile
         volumes:
             - ./my-smtp-server/src:/app/src
-        ports:
-            - 12345:12345
 
     server:
         build:
@@ -42,7 +40,7 @@ services:
         ports:
             - 8000:8000
         environment:
-            - QUEUE_URL=amqp://admin:admin@rabbitmq
-            - QUEUE=test
+            - QUEUE_URL
+            - QUEUE
         depends_on:
             - rabbitmq

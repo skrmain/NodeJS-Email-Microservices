@@ -4,8 +4,8 @@ const { connect } = require('amqplib');
 
 const config = {
     port: process.env.PORT || 8000,
-    queueUrl: process.env.QUEUE_URL || 'amqp://admin:admin@localhost',
     queue: process.env.QUEUE || 'test',
+    queueUrl: process.env.QUEUE_URL || 'amqp://admin:admin@localhost',
 };
 
 let channel;
