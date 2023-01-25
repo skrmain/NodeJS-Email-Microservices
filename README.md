@@ -2,6 +2,8 @@
 
 ## Notes
 
+- `curl http://localhost:8000/send-mail/?to=admin@test.com  -v`
+
 ```sh
 # - Create Folder for docker data
 mkdir -p docker-data/mysql_data
@@ -42,4 +44,13 @@ docker push <Image_Name>
 
 ## Flow Chart
 
-![Microservices Flow Chart](./Product-Microservices-Flow.png)
+```mermaid
+flowchart LR
+
+A[server]
+B{RabbitMQ}
+C[email-service]
+D[my-smtp-server]
+
+A --> B --> C --> D
+```

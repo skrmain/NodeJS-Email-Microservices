@@ -16,8 +16,8 @@ services:
         volumes:
             - ./email-service/src:/app/src
         environment:
-            - RMQ_URL=amqp://admin:admin@rabbitmq
-            - RMQ_QUEUE=nodemailer-amqp
+            - QUEUE_URL=amqp://admin:admin@rabbitmq
+            - QUEUE=nodemailer-amqp
             - SMTP_PORT=12345
             - SMTP_HOSTNAME=my-smtp-server
         depends_on:
@@ -42,7 +42,7 @@ services:
         ports:
             - 8000:8000
         environment:
-            - RMQ_URL=amqp://admin:admin@rabbitmq
-            - RMQ_QUEUE=nodemailer-amqp
+            - QUEUE_URL=amqp://admin:admin@rabbitmq
+            - QUEUE=test
         depends_on:
             - rabbitmq
