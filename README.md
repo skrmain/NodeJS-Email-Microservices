@@ -1,45 +1,29 @@
-# Product Micro-Services
+# NodeJS-Email-Microservices
 
 ## Notes
 
-```sh
-# - Create Folder for docker data
-mkdir -p docker-data/mysql_data
-
-# To run in development mode
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
-
-# To create images for Production
-docker-compose -f docker-compose.yml -f docker-compose.build.yml up -d
-
-# To run production images
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-
-# To stop and remove active containers
-docker-compose -f docker-compose.yml -f docker-compose.<>.yml down
-
-# To see logs
-docker-compose -f docker-compose.yml -f docker-compose.<>.yml logs -f <SERVICE_NAME>
-
-# Migration Command
-npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:show
-
-# To tag the docker image
-docker tag <Existing_Name> <username>/<New_Name>:tag
-
-# To push the image to docker hub
-docker push <Image_Name>
-```
+1. Copy `.env.example` to `.env`
+2. `docker compose up -d rabbitmq`
+3. `docker compose up` - NOTE: After rabbitmq starts
+4. Hit following URL in browser or curl
+   - `curl http://localhost:8000/ -v`
+   - `http://localhost:8000/send-mail/?to=ram@test.com&subject=Test&message=HelloWorld`
+5. `docker compose down`
 
 ## References
 
-- https://typeorm.io/
-- https://joi.dev/api/?v=17.6.0
-- https://www.npmjs.com/package/dotenv
 - https://github.com/nodemailer/nodemailer-amqp-example
 - https://nodemailer.com/about/
-- https://typeorm.io/validation
 
 ## Flow Chart
 
-![Microservices Flow Chart](./Product-Microservices-Flow.png)
+```mermaid
+flowchart LR
+
+A[server]
+B{RabbitMQ}
+C[email-service]
+D[my-smtp-server]
+
+A --> B --> C --> D
+```

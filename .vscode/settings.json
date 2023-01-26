@@ -2,8 +2,6 @@
     "cSpell.words": [
         "RABBITMQ",
         "STARTTLS",
-        "tsoa",
-        "typeorm"
     ],
     "editor.formatOnSave": true
 }
