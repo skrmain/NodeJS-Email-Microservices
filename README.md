@@ -1,4 +1,4 @@
-# ExpressJS-Email-Microservices
+# NodeJS-Email-Microservices
 
 ## Notes
 
