@@ -1,8 +1,11 @@
 const { SMTPServer } = require('smtp-server');
+const { simpleParser } = require('mailparser');
 
 const config = {
     port: process.env.SMTP_SERVER_PORT || 12345,
 };
+
+const data = [];
 
 const server = new SMTPServer({
     logger: false, // log to console
@@ -24,8 +27,21 @@ const server = new SMTPServer({
     onData(stream, session, callback) {
         console.log('Streaming message from user %s', session?.user);
         console.log('------------------');
-        stream.pipe(process.stdout);
-        stream.on('end', () => {
+        // stream.pipe(process.stdout);
+        const chunks = [];
+
+        stream.on('readable', () => {
+            let chunk;
+            while (null !== (chunk = stream.read())) {
+                chunks.push(chunk);
+            }
+        });
+        stream.on('end', async () => {
+            const content = chunks.join('');
+            const mailObj = await simpleParser(content);
+            data.push({ session, data: mailObj });
+            console.log('Data ', JSON.stringify(data));
+            // console.log('Content ', content);
             console.log(''); // ensure line-break after the message
             callback(null); // accept the message once the stream is ended
             // "Message queued as " + Date.now()

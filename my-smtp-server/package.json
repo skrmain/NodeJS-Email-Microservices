@@ -11,6 +11,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "mailparser": "^3.6.3",
         "smtp-server": "^3.11.0"
     },
     "devDependencies": {
