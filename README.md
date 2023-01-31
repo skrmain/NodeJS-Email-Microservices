@@ -38,12 +38,10 @@ await this.client.set('name', 'Admin', {
 
 ### Prerequisites
 
-- DynamoDB Local - Java, AWS CLI
+- DynamoDB Local - Java OR Docker Setup
+  - Add `sudo chmod 777 ./docker-data/dynamodb`
+- AWS CLI Installed, Auto Complete Configured
 - NodeJS
-
-### Notes
-
-> DynamoDB
 
 - Developer Guide: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html
   - Install: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html#DynamoDBLocal.DownloadingAndRunning.title

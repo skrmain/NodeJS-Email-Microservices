@@ -1,8 +1,10 @@
 import redisProductModel from './database/redis.database';
 import { ProductSchema } from './types';
-import { listTables } from './utils/dynamodb.util';
+import { DynamoDatabaseOperations } from './database-operations/dynamodb.operations';
+import { ProductSchemaDDB, TABLE_NAME } from './schema/product.schema';
+import { Products } from './data/product.data';
 
-(async () => {
+async () => {
     const p1: ProductSchema = {
         category: 'mobile',
         id: '1',
@@ -28,44 +30,33 @@ import { listTables } from './utils/dynamodb.util';
     }
     // console.log("B", product2);
     // console.log(await redisProductModel.deleteProduct("1"));
-})();
+};
 
 // - DynamoDB
 
-export const run = async () => {
-    try {
-        // const result = await createTable();
-        // console.log("Table Created", result.TableDescription?.TableName);
+(async () => {
+    const dynamoOperations = new DynamoDatabaseOperations();
 
-        const dbTables = await listTables();
-        console.log('DB Tables ', dbTables.TableNames);
+    const tablesCreated = await dynamoOperations.createTables([ProductSchemaDDB]);
+    console.log('Tables Created ', tablesCreated);
+    const tablesList = await dynamoOperations.listTables();
+    console.log('Tables List ', tablesList);
 
-        // for (const product of Products) {
-        //   const savedItem = await updateOrAddItem({ ...product });
-        //   console.log("Saved Item: ", savedItem);
-        // }
+    // for (const product of Products) {
+    //     await dynamoOperations.updateOrAddItem({ TableName: TABLE_NAME, Item: { ...product } });
+    // }
+    // console.log('Item saved/updated ', Products.length);
 
-        // const item = await getAllItems();
-        // console.log("Item ", item.Items);
+    const items = await dynamoOperations.getAllItems(TABLE_NAME);
+    console.log('Items ', items);
 
-        // const deletedItem = await deleteItem("m1v930", "1653368519448");
-        // console.log("Deleted Item ", deletedItem);
+    // const deletedItem = await dynamoOperations.deleteItem({ TableName: TABLE_NAME, Key: { dateEdited: '1675094632790', Id: 'shs3vq' } });
+    // console.log('Deleted Item ', deletedItem);
 
-        // // - Query Command
-        // const result = await ddbDocClient.send(
-        //   new QueryCommand({
-        //     TableName: TABLE_NAME,
-        //     ExpressionAttributeValues: {
-        //       ":id": "5q6rk5",
-        //       ":de": "16533685194",
-        //     },
-        //     KeyConditionExpression: "Id = :id and dateEdited >= :de",
-        //     // ProjectionExpression: "",
-        //   })
-        // );
-        // console.log("Result ", result);
-    } catch (err) {
-        console.log('Error', err);
-    }
-};
-// run();
+    const queryItem = await dynamoOperations.queryItem({
+        TableName: TABLE_NAME,
+        ExpressionAttributeValues: { ':id': { S: 'rldzkv' }, ':de': { S: '1675094632790' } },
+        KeyConditionExpression: 'Id = :id and dateEdited >= :de',
+    });
+    console.log('Queried Items ', queryItem);
+})();
