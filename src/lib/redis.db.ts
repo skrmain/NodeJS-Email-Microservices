@@ -21,7 +21,7 @@ class RedisDB {
     private client: RedisClientType;
     constructor() {
         if (instance) {
-            throw new Error('Can not re instantiate');
+            throw new Error("Can't re instantiate");
         }
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         instance = this;
