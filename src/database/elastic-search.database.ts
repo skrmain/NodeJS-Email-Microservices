@@ -1,6 +1,6 @@
 import { Client } from '@elastic/elasticsearch';
 
-import { SampleErrors } from '../data/error.data';
+import { SampleErrors } from '../shared/data';
 
 const client = new Client({
     node: 'https://localhost:9200',
