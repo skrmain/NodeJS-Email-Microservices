@@ -21,10 +21,11 @@ const data = [];
 
 wsServer.on('connection', function (ws) {
     ws.on('message', function (msg) {
+        console.log('S ', msg.toString());
         wsServer.clients.forEach(function each(client) {
             if (client.readyState === WebSocket.OPEN) {
                 // check if client is ready
-                client.send(msg.toString());
+                client.send(JSON.stringify(data));
             }
         });
     });
@@ -75,12 +76,13 @@ const server = new SMTPServer({
             const content = chunks.join('');
             const mailObj = await simpleParser(content);
             data.push({ session, data: mailObj });
-            // ws.
-            console.log('Data ', JSON.stringify(data));
+            console.log('Mail Received');
+            // console.log('Data ', JSON.stringify(data));
             wsServer.clients.forEach(function each(client) {
                 if (client.readyState === WebSocket.OPEN) {
                     // check if client is ready
-                    client.send('Mail Received'.toString());
+                    // client.send('Mail Received'.toString());
+                    client.send(JSON.stringify({ session, data: mailObj }));
                 }
             });
             // console.log('Content ', content);
