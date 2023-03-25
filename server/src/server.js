@@ -46,7 +46,24 @@ http.createServer(async (req, res) => {
         const to = (query && query.to) || 'test@myserver.com';
         const subject = (query && query.subject) || 'Test Mail';
         const text = (query && query.message) || 'This is a test Mail';
-        const result = await pushMessageToQueue({ to, subject, text });
+        const html = `
+        <style>
+            .mail-content {
+                text-align: center;
+                margin: 0;
+                font-family: sans-serif;
+            }
+            a {
+                background-color: red;
+                padding: 1rem;
+            }
+        </style>
+        <div class="mail-content">
+            <h1>Hi, Ram</h1>
+            <p>Click on below link to verify your account for StoreApp</p>
+            <a href="https://google.com" target="_blank">Verify Account</a>
+        </div>`;
+        const result = await pushMessageToQueue({ to, subject, text, html });
         res.write(result);
     } else {
         res.write('Ok');
