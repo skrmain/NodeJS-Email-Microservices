@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mails</title>
+        <style>
+            .mail {
+                padding: 1rem;
+                background-color: #e8e8e8;
+                margin-bottom: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Mails</h1>
+        <button class="sync">Sync</button>
+        <div class="mails"></div>
+        <script>
+            const ws = new WebSocket('ws://localhost:8001');
+            const mailsElm = document.querySelector('.mails');
+            const syncElm = document.querySelector('.sync');
+
+            syncElm.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                ws.send('SYNC');
+            });
+
+            function generateMailHtml(params) {
+                const div = document.createElement('div');
+                const div2 = document.createElement('div');
+                const h5 = document.createElement('h3');
+                const p = document.createElement('p');
+                div.classList.add('mail');
+
+                h5.innerHTML = `From: ${params.from.text} <br/> To: ${params.to.text}`;
+                p.innerHTML = `Subject: ${params.subject} <br/> Message: ${params.text}`;
+                div2.innerHTML = params.html || params.textAsHtml;
+
+                div.appendChild(h5);
+                div.appendChild(p);
+                div.appendChild(div2);
+                return div;
+            }
+
+            function appendMail(data) {
+                data = JSON.parse(data);
+                console.log('D ', data);
+                if (!(data instanceof Array)) {
+                    data = [data];
+                }
+                data.forEach((mail) => {
+                    mailsElm.appendChild(generateMailHtml(mail.data));
+                });
+            }
+
+            ws.onopen = () => console.log('Socket Connected');
+            ws.onmessage = (event) => appendMail(event.data);
+        </script>
+    </body>
+</html>

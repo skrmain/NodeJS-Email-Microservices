@@ -1,0 +1,123 @@
+[
+    {
+        "session": {
+            "id": "izngnldrol2uebnu",
+            "secure": false,
+            "localAddress": "172.18.0.4",
+            "localPort": 12345,
+            "remoteAddress": "172.18.0.5",
+            "remotePort": 48520,
+            "clientHostname": "nodejs-email-microservices-email-service-1.nodejs-email-microservices_default",
+            "openingCommand": "EHLO",
+            "hostNameAppearsAs": "[127.0.0.1]",
+            "xClient": {},
+            "xForward": {},
+            "transmissionType": "ESMTPA",
+            "tlsOptions": false,
+            "envelope": { "mailFrom": false, "rcptTo": [] },
+            "transaction": 2,
+            "user": { "username": "user-1" }
+        },
+        "data": {
+            "attachments": [],
+            "headers": {},
+            "headerLines": [
+                {
+                    "key": "content-type",
+                    "line": "Content-Type: text/plain; charset=utf-8"
+                },
+                { "key": "from", "line": "From: sender@example.com" },
+                { "key": "to", "line": "To: ram@test.com" },
+                { "key": "subject", "line": "Subject: Test3" },
+                {
+                    "key": "message-id",
+                    "line": "Message-ID: <24cc0911-62f1-13c2-7b82-a09f574cc7cb@example.com>"
+                },
+                {
+                    "key": "content-transfer-encoding",
+                    "line": "Content-Transfer-Encoding: 7bit"
+                },
+                { "key": "date", "line": "Date: Wed, 01 Mar 2023 12:55:07 +0000" },
+                { "key": "mime-version", "line": "MIME-Version: 1.0" }
+            ],
+            "text": "HelloWorld\n",
+            "textAsHtml": "<p>HelloWorld</p>",
+            "subject": "Test3",
+            "date": "2023-03-01T12:55:07.000Z",
+            "to": {
+                "value": [{ "address": "ram@test.com", "name": "" }],
+                "html": "<span class=\"mp_address_group\"><a href=\"mailto:ram@test.com\" class=\"mp_address_email\">ram@test.com</a></span>",
+                "text": "ram@test.com"
+            },
+            "from": {
+                "value": [{ "address": "sender@example.com", "name": "" }],
+                "html": "<span class=\"mp_address_group\"><a href=\"mailto:sender@example.com\" class=\"mp_address_email\">sender@example.com</a></span>",
+                "text": "sender@example.com"
+            },
+            "messageId": "<24cc0911-62f1-13c2-7b82-a09f574cc7cb@example.com>",
+            "html": false
+        }
+    },
+    {
+        "session": {
+            "id": "km7buvqlsr7s4bfz",
+            "secure": false,
+            "localAddress": "172.18.0.4",
+            "localPort": 12345,
+            "remoteAddress": "172.18.0.5",
+            "remotePort": 34824,
+            "clientHostname": "nodejs-email-microservices-email-service-1.nodejs-email-microservices_default",
+            "openingCommand": "EHLO",
+            "hostNameAppearsAs": "[127.0.0.1]",
+            "xClient": {},
+            "xForward": {},
+            "transmissionType": "ESMTPA",
+            "tlsOptions": false,
+            "envelope": {
+                "mailFrom": { "address": "sender@example.com", "args": false },
+                "rcptTo": [{ "address": "ram@test.com", "args": false }]
+            },
+            "transaction": 1,
+            "user": { "username": "user-1" }
+        },
+        "data": {
+            "attachments": [],
+            "headers": {},
+            "headerLines": [
+                {
+                    "key": "content-type",
+                    "line": "Content-Type: text/plain; charset=utf-8"
+                },
+                { "key": "from", "line": "From: sender@example.com" },
+                { "key": "to", "line": "To: ram@test.com" },
+                { "key": "subject", "line": "Subject: Test3" },
+                {
+                    "key": "message-id",
+                    "line": "Message-ID: <145d40bb-b5b6-f5c1-9e1f-e413d8940013@example.com>"
+                },
+                {
+                    "key": "content-transfer-encoding",
+                    "line": "Content-Transfer-Encoding: 7bit"
+                },
+                { "key": "date", "line": "Date: Wed, 01 Mar 2023 12:55:43 +0000" },
+                { "key": "mime-version", "line": "MIME-Version: 1.0" }
+            ],
+            "text": "HelloWorld\n",
+            "textAsHtml": "<p>HelloWorld</p>",
+            "subject": "Test3",
+            "date": "2023-03-01T12:55:43.000Z",
+            "to": {
+                "value": [{ "address": "ram@test.com", "name": "" }],
+                "html": "<span class=\"mp_address_group\"><a href=\"mailto:ram@test.com\" class=\"mp_address_email\">ram@test.com</a></span>",
+                "text": "ram@test.com"
+            },
+            "from": {
+                "value": [{ "address": "sender@example.com", "name": "" }],
+                "html": "<span class=\"mp_address_group\"><a href=\"mailto:sender@example.com\" class=\"mp_address_email\">sender@example.com</a></span>",
+                "text": "sender@example.com"
+            },
+            "messageId": "<145d40bb-b5b6-f5c1-9e1f-e413d8940013@example.com>",
+            "html": false
+        }
+    }
+]
