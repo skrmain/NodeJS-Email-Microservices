@@ -1,39 +1,31 @@
 const http = require('http');
 const url = require('url');
-const { connect } = require('amqplib');
+const { createTransport } = require('nodemailer');
 
 const config = {
     port: process.env.PORT || 8000,
-    queue: process.env.QUEUE || 'test',
-    queueUrl: process.env.QUEUE_URL || 'amqp://admin:admin@localhost',
+    smtpHost: process.env.SMTP_SERVER_HOSTNAME || '127.0.0.1',
+    smtpPort: parseInt(process.env.SMTP_SERVER_PORT || '12345'),
 };
 
-let channel;
+let transport;
 
-const getChannel = async () => {
-    if (!channel) {
-        const connection = await connect(config.queueUrl);
-        channel = await connection.createChannel();
-        await channel.assertQueue(config.queue, { durable: true });
-        // connection.on('close', ()=> {})
+const sendMail = (message) => {
+    if (!transport) {
+        transport = createTransport(
+            {
+                host: config.smtpHost,
+                port: config.smtpPort,
+                disableFileAccess: true, // Security options to disallow using attachments from file or URL
+                disableUrlAccess: true,
+            },
+            {
+                from: 'sender@example.com', // Default options for the message. Used if specific values are not set
+            }
+        );
+        // transport.on('error', ()=> {})
     }
-    return channel;
-};
-
-const pushMessageToQueue = async (data) => {
-    try {
-        const channel = await getChannel();
-
-        const sent = channel.sendToQueue(config.queue, Buffer.from(JSON.stringify({ ...data })), {
-            persistent: true, // Store queued elements on disk
-            contentType: 'application/json',
-        });
-        console.log('Sent ', sent);
-        return 'Message Pushed';
-    } catch (error) {
-        console.log('Error : ', error);
-        return 'Error';
-    }
+    return transport.sendMail(message);
 };
 
 http.createServer(async (req, res) => {
@@ -63,7 +55,9 @@ http.createServer(async (req, res) => {
             <p>Click on below link to verify your account for StoreApp</p>
             <a href="https://google.com" target="_blank">Verify Account</a>
         </div>`;
-        const result = await pushMessageToQueue({ to, subject, text, html });
+        const message = { to, subject, text, html };
+        message.auth = { user: 'user-1', pass: 'pass' };
+        const result = await sendMail(message);
         res.write(result);
     } else {
         res.write('Ok');

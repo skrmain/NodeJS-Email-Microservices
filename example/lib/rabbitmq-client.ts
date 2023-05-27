@@ -76,4 +76,13 @@ rabbitMqClient.addConsumerToQueue(async (data) => {
     if (data === null) return;
     let message = JSON.parse(data.content.toString());
     console.log('Message : ', message);
+
+    // try {
+    //     console.log('Delivered message %s', result.messageId);
+    //     channel.ack(data); // remove message item from the queue
+    // } catch (error) {
+    //     console.log('[mail-error]', error);
+    //     channel.nack(data); // put the failed message item back to queue
+    //     process.exit(1);
+    // }
 });
