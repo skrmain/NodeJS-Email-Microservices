@@ -1,49 +1,49 @@
-services:
-    rabbitmq:
-        container_name: rabbitmq
-        image: rabbitmq:3.10-management-alpine
-        environment:
-            - RABBITMQ_DEFAULT_USER=admin
-            - RABBITMQ_DEFAULT_PASS=admin
-        ports:
-            # - 5672:5672 # AMQP protocol port
-            - 15672:15672 # HTTP management UI
+# services:
+#     rabbitmq:
+#         container_name: rabbitmq
+#         image: rabbitmq:3.10-management-alpine
+#         environment:
+#             - RABBITMQ_DEFAULT_USER=admin
+#             - RABBITMQ_DEFAULT_PASS=admin
+#         ports:
+#             # - 5672:5672 # AMQP protocol port
+#             - 15672:15672 # HTTP management UI
 
-    email-service:
-        build:
-            context: ./email-service/
-            dockerfile: Dockerfile
-        volumes:
-            - ./email-service/src:/app/src
-        environment:
-            - QUEUE_URL
-            - QUEUE
-            - SMTP_SERVER_PORT
-            - SMTP_SERVER_HOSTNAME
-        depends_on:
-            - rabbitmq
-            - my-smtp-server
+#     email-service:
+#         build:
+#             context: ./email-service/
+#             dockerfile: Dockerfile
+#         volumes:
+#             - ./email-service/src:/app/src
+#         environment:
+#             - QUEUE_URL
+#             - QUEUE
+#             - SMTP_SERVER_PORT
+#             - SMTP_SERVER_HOSTNAME
+#         depends_on:
+#             - rabbitmq
+#             - my-smtp-server
 
-    my-smtp-server:
-        build:
-            context: ./my-smtp-server/
-            dockerfile: Dockerfile
-        ports:
-            - 8001:8001
-        volumes:
-            - ./my-smtp-server/src:/app/src
-            - ./my-smtp-server/client:/app/client
+#     my-smtp-server:
+#         build:
+#             context: ./my-smtp-server/
+#             dockerfile: Dockerfile
+#         ports:
+#             - 8001:8001
+#         volumes:
+#             - ./my-smtp-server/src:/app/src
+#             - ./my-smtp-server/client:/app/client
 
-    server:
-        build:
-            context: ./server/
-            dockerfile: Dockerfile
-        volumes:
-            - ./server/src:/app/src
-        ports:
-            - 8000:8000
-        environment:
-            - QUEUE_URL
-            - QUEUE
-        depends_on:
-            - rabbitmq
+#     server:
+#         build:
+#             context: ./server/
+#             dockerfile: Dockerfile
+#         volumes:
+#             - ./server/src:/app/src
+#         ports:
+#             - 8000:8000
+#         environment:
+#             - QUEUE_URL
+#             - QUEUE
+#         depends_on:
+#             - rabbitmq

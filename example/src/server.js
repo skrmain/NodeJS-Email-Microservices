@@ -29,6 +29,43 @@ const sendMail = (message) => {
     return transport.sendMail(message);
 };
 
+const htmlTemplate = {
+    ram: `
+    <style>
+        .mail-content {
+            text-align: center;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        a {
+            background-color: red;
+            padding: 1rem;
+        }
+    </style>
+    <div class="mail-content">
+        <h1>Hi, Ram</h1>
+        <p>Click on below link to verify your account for StoreApp</p>
+        <a href="https://google.com" target="_blank">Verify Account</a>
+    </div>`,
+    rahul: `
+    <style>
+        .mail-content {
+            text-align: center;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        a {
+            background-color: red;
+            padding: 1rem;
+        }
+    </style>
+    <div class="mail-content">
+        <h1>Hi, Rahul</h1>
+        <p>Click on below link to verify your account for StoreApp</p>
+        <a href="https://google.com" target="_blank">Verify Account</a>
+    </div>`,
+};
+
 http.createServer(async (req, res) => {
     console.log(`[req] ${req.method} : ${req.url}`);
     res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -39,25 +76,7 @@ http.createServer(async (req, res) => {
         const to = (query && query.to) || 'test@myserver.com';
         const subject = (query && query.subject) || 'Test Mail';
         const text = (query && query.message) || 'This is a test Mail';
-        const html = `
-        <style>
-            .mail-content {
-                text-align: center;
-                margin: 0;
-                font-family: sans-serif;
-            }
-            a {
-                background-color: red;
-                padding: 1rem;
-            }
-        </style>
-        <div class="mail-content">
-            <h1>Hi, Ram</h1>
-            <p>Click on below link to verify your account for StoreApp</p>
-            <a href="https://google.com" target="_blank">Verify Account</a>
-        </div>`;
-        const message = { to, subject, text, html };
-        const result = await sendMail(message);
+        const result = await sendMail({ to, subject, text, html: htmlTemplate.rahul });
         console.log('RR ', result);
         res.write('SENT');
     } else {
