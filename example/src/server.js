@@ -18,6 +18,7 @@ const sendMail = (message) => {
                 port: config.smtpPort,
                 disableFileAccess: true, // Security options to disallow using attachments from file or URL
                 disableUrlAccess: true,
+                auth: { user: 'user-1', pass: 'pass' },
             },
             {
                 from: 'sender@example.com', // Default options for the message. Used if specific values are not set
@@ -56,9 +57,9 @@ http.createServer(async (req, res) => {
             <a href="https://google.com" target="_blank">Verify Account</a>
         </div>`;
         const message = { to, subject, text, html };
-        message.auth = { user: 'user-1', pass: 'pass' };
         const result = await sendMail(message);
-        res.write(result);
+        console.log('RR ', result);
+        res.write('SENT');
     } else {
         res.write('Ok');
     }

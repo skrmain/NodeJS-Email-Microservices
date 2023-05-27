@@ -14,16 +14,3 @@
 
 - https://github.com/nodemailer/nodemailer-amqp-example
 - https://nodemailer.com/about/
-
-## Flow Chart
-
-```mermaid
-flowchart LR
-
-A[server]
-B{RabbitMQ}
-C[email-service]
-D[my-smtp-server]
-
-A --> B --> C --> D
-```
