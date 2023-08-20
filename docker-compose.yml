@@ -38,3 +38,9 @@ services:
         volumes:
             - './docker-data/dynamodb:/home/dynamodblocal/data'
         working_dir: /home/dynamodblocal
+
+    postgres:
+        image: postgres:alpine
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: root
