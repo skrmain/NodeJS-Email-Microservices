@@ -1,0 +1,46 @@
+services:
+    mysql:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        ports:
+            - 3306:3306
+        volumes:
+            - ./docker-data/mysql_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: admin
+
+    redis:
+        image: redis
+        restart: always
+        ports:
+            - 6379:6379
+        volumes:
+            - ./docker-data/redis_data:/data
+
+    mongodb:
+        image: mongo
+        restart: always
+        ports:
+            - 27017:27017
+        volumes:
+            - ./docker-data/mongodb_data:/data/db/
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: admin
+
+    dynamodb:
+        command: '-jar DynamoDBLocal.jar -sharedDb -dbPath ./data'
+        image: 'amazon/dynamodb-local:latest'
+        container_name: dynamodb
+        ports:
+            - '8000:8000'
+        volumes:
+            - './docker-data/dynamodb:/home/dynamodblocal/data'
+        working_dir: /home/dynamodblocal
+
+    postgres:
+        image: postgres:alpine
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: root

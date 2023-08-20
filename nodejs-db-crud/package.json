@@ -1,0 +1,38 @@
+{
+    "name": "nodejs-db-crud",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "scripts": {
+        "start": "node dist/index.js",
+        "start:dev": "nodemon src/index.ts",
+        "start:mysql": "nodemon src/mysql-service/index.ts",
+        "build": "tsc --project ./",
+        "lint": "eslint src/**/*.ts",
+        "prettier": "prettier -c  src/**/*.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^17.0.31",
+        "@typescript-eslint/eslint-plugin": "^5.23.0",
+        "@typescript-eslint/parser": "^5.23.0",
+        "eslint": "^8.15.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-import": "^2.26.0",
+        "nodemon": "^2.0.16",
+        "prettier": "2.6.2",
+        "ts-node": "^10.7.0",
+        "typescript": "^4.6.4"
+    },
+    "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.95.0",
+        "@aws-sdk/lib-dynamodb": "^3.95.0",
+        "@elastic/elasticsearch": "^8.5.0",
+        "dotenv": "^16.0.1",
+        "mongodb": "^4.6.0",
+        "mongoose": "^6.8.0",
+        "mysql2": "^3.2.3",
+        "redis": "^4.1.0"
+    }
+}
