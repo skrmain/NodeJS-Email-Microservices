@@ -1,49 +1,95 @@
-# services:
-#     rabbitmq:
-#         container_name: rabbitmq
-#         image: rabbitmq:3.10-management-alpine
-#         environment:
-#             - RABBITMQ_DEFAULT_USER=admin
-#             - RABBITMQ_DEFAULT_PASS=admin
-#         ports:
-#             # - 5672:5672 # AMQP protocol port
-#             - 15672:15672 # HTTP management UI
+services:
+    #     rabbitmq:
+    #         container_name: rabbitmq
+    #         image: rabbitmq:3.10-management-alpine
+    #         environment:
+    #             - RABBITMQ_DEFAULT_USER=admin
+    #             - RABBITMQ_DEFAULT_PASS=admin
+    #         ports:
+    #             # - 5672:5672 # AMQP protocol port
+    #             - 15672:15672 # HTTP management UI
 
-#     email-service:
-#         build:
-#             context: ./email-service/
-#             dockerfile: Dockerfile
-#         volumes:
-#             - ./email-service/src:/app/src
-#         environment:
-#             - QUEUE_URL
-#             - QUEUE
-#             - SMTP_SERVER_PORT
-#             - SMTP_SERVER_HOSTNAME
-#         depends_on:
-#             - rabbitmq
-#             - my-smtp-server
+    #     email-service:
+    #         build:
+    #             context: ./email-service/
+    #             dockerfile: Dockerfile
+    #         volumes:
+    #             - ./email-service/src:/app/src
+    #         environment:
+    #             - QUEUE_URL
+    #             - QUEUE
+    #             - SMTP_SERVER_PORT
+    #             - SMTP_SERVER_HOSTNAME
+    #         depends_on:
+    #             - rabbitmq
+    #             - my-smtp-server
 
-#     my-smtp-server:
-#         build:
-#             context: ./my-smtp-server/
-#             dockerfile: Dockerfile
-#         ports:
-#             - 8001:8001
-#         volumes:
-#             - ./my-smtp-server/src:/app/src
-#             - ./my-smtp-server/client:/app/client
+    #     my-smtp-server:
+    #         build:
+    #             context: ./my-smtp-server/
+    #             dockerfile: Dockerfile
+    #         ports:
+    #             - 8001:8001
+    #         volumes:
+    #             - ./my-smtp-server/src:/app/src
+    #             - ./my-smtp-server/client:/app/client
 
-#     server:
-#         build:
-#             context: ./server/
-#             dockerfile: Dockerfile
-#         volumes:
-#             - ./server/src:/app/src
-#         ports:
-#             - 8000:8000
-#         environment:
-#             - QUEUE_URL
-#             - QUEUE
-#         depends_on:
-#             - rabbitmq
+    #     server:
+    #         build:
+    #             context: ./server/
+    #             dockerfile: Dockerfile
+    #         volumes:
+    #             - ./server/src:/app/src
+    #         ports:
+    #             - 8000:8000
+    #         environment:
+    #             - QUEUE_URL
+    #             - QUEUE
+    #         depends_on:
+    #             - rabbitmq
+
+    mysql:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        ports:
+            - 3306:3306
+        volumes:
+            - ./docker-data/mysql_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: admin
+
+    redis:
+        image: redis
+        restart: always
+        ports:
+            - 6379:6379
+        volumes:
+            - ./docker-data/redis_data:/data
+
+    mongodb:
+        image: mongo
+        restart: always
+        ports:
+            - 27017:27017
+        volumes:
+            - ./docker-data/mongodb_data:/data/db/
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: admin
+
+    dynamodb:
+        command: '-jar DynamoDBLocal.jar -sharedDb -dbPath ./data'
+        image: 'amazon/dynamodb-local:latest'
+        container_name: dynamodb
+        ports:
+            - '8000:8000'
+        volumes:
+            - './docker-data/dynamodb:/home/dynamodblocal/data'
+        working_dir: /home/dynamodblocal
+
+    postgres:
+        image: postgres:alpine
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: root

@@ -1,6 +1,6 @@
 import { Client } from '@elastic/elasticsearch';
 
-import { SampleErrors } from '../shared/data';
+import { SampleErrors } from '../../try-dynamodb/data';
 
 const client = new Client({
     node: 'https://localhost:9200',

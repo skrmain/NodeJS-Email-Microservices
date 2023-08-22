@@ -7,7 +7,7 @@ const path = require('path');
 
 const app = express();
 
-app.use('/', express.static(path.resolve(__dirname, '../client')));
+app.use('/', express.static(path.resolve(__dirname, './static')));
 
 const myServer = app.listen(8001, () => console.log('[express] listening on 8001')); // regular http server using node express which serves your webpage
 

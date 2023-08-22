@@ -1,12 +1,5 @@
-import redisDB from './lib/redis.db';
-import dynamoDB from './lib/dynamo.db';
+import dynamoDB from './dynamo.db';
 import { ProductSchemaDDB, TABLE_NAME } from './schema/product.schema';
-
-async () => {
-    await redisDB.hSetValue('1', 'name', 'rohan');
-    const result = await redisDB.getValue({ key: '1', type: 'htype' });
-    console.log('Get', result);
-};
 
 (async () => {
     const tablesCreated = await dynamoDB.createTables([ProductSchemaDDB]);

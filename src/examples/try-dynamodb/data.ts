@@ -1,4 +1,8 @@
-import { generateRandomText } from './utils';
+export const generateRandomText = (length = 6) => {
+    return Math.random()
+        .toString(36)
+        .substring(2, 2 + length);
+};
 
 type ErrorType = 'A' | 'B';
 
