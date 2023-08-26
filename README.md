@@ -1,17 +1,5 @@
 # NodeJS-DB-CRUD
 
-## Notes
-
-```sh
-# - Create Folder for docker data
-mkdir -p docker-data/{mysql_data,redis_data,mongodb_data}
-
-# - Start the mongodb server using docker-compose
-docker-compose up -d
-
-npm install
-```
-
 ## References
 
 - https://stackabuse.com/converting-callbacks-to-promises-in-node-js/
