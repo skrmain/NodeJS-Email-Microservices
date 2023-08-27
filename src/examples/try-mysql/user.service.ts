@@ -1,5 +1,5 @@
-import { DatabaseOperation } from './mysql.database';
+import { Database, DatabaseOperation } from '../../shared/mysql.utils';
 
-class UserTableOperations extends DatabaseOperation {}
+class UserService extends DatabaseOperation {}
 
-export default new UserTableOperations('user');
+export default new UserService(Database.connection, Database.dbName, 'users');

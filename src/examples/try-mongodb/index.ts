@@ -1,49 +1,38 @@
 import { MONGODB_URI } from '../../config';
-import database from './mongodb.utils';
+import { Database } from '../../shared/mongodb.utils';
 
 const main = async () => {
     try {
-        await database.connect(MONGODB_URI, 'test2');
+        await Database.connect(MONGODB_URI, 'test2');
         console.log('DB Connected');
 
         const userService = (await import('./user.service')).default;
 
-        await userService.createOne({
+        const createdUser = await userService.createOne({
             name: 'Rahul',
             email: 'rahul@example.com',
             isEmailVerified: false,
         });
-        console.log('IN');
+        console.log({ createdUser });
 
         const users = await userService.getMany();
-        console.log('OUT', users);
+        console.log({ users });
 
         const user = await userService.getOne();
-        console.log('OUT', user);
+        console.log({ user });
+
+        if (user) {
+            const updatedResult = await userService.updateOne(user._id, { name: 'Raj' });
+            console.log({ updatedResult });
+
+            const deletedResult = await userService.deleteOne(user._id);
+            console.log({ deletedResult });
+        }
     } catch (error) {
-        console.log('Er ', error);
+        console.log({ error });
+    } finally {
+        await Database.disconnect();
     }
-    //   await createNew({
-    //     name: "Apple iPad",
-    //     category: "electronics",
-    //     price: 60000,
-    //   });
-
-    //   const result = await deleteOne(new ObjectId("6278cf75dd48109246f941a2"));
-    //   console.log("Result ", result);
-
-    //   const result = await updateOne(new ObjectId("6278cfff7d8610bc14fdeb15"), {
-    //     category: "mobile",
-    //     name: "Apple iPhone",
-    //     price: 45000,
-    //   });
-    //   console.log("Result : ", result);
-
-    // const products = await getAll();
-    // console.log('P : ', products);
-
-    //   const product = await getOne(new ObjectId("6278cfff7d8610bc14fdeb15"));
-    //   console.log("P ", product);
 };
 
 main();

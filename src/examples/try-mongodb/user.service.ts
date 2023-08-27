@@ -1,14 +1,13 @@
-import { Document, ObjectId } from 'mongodb';
+import { Document } from 'mongodb';
 
-import database, { MongoOperation } from './mongodb.utils';
+import { Database, DatabaseOperation } from '../../shared/mongodb.utils';
 
 interface User {
-    _id?: ObjectId;
     name: string;
     email: string;
     isEmailVerified: boolean;
 }
 
-class UserService<T extends Document> extends MongoOperation<T> {}
+class UserService<T extends Document> extends DatabaseOperation<T> {}
 
-export default new UserService<User>(database.db, 'users');
+export default new UserService<User>(Database.collection('users'));

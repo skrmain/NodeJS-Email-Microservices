@@ -1,14 +1,11 @@
-import { DatabaseConnection } from './mysql.database';
+import { Database } from '../../shared/mysql.utils';
 import userTable from './user.service';
 
 (async () => {
-    const connection = await new DatabaseConnection().getConnection();
-    if (!connection) {
-        throw new Error('My Connection Error');
-    }
+    await Database.connect('test');
     console.log('[mysql] Connected');
 
-    const [result] = await userTable.getAll(connection, 'test', {
+    const [result] = await userTable.getMany({
         page: 1,
         pageSize: 5,
         sortBy: 'email',
@@ -27,6 +24,6 @@ import userTable from './user.service';
     // ]);
     // console.log('iResult', iResult);
 
-    await connection.end();
+    await Database.disconnect();
     console.log('[mysql] Connection Closed');
 })();
