@@ -7,7 +7,8 @@
         "start": "node dist/index.js",
         "build": "tsc --project ./",
         "start:dev": "nodemon src/index.ts",
-        "try:mongodb": "nodemon src/examples/try-mongodb/index.ts"
+        "try:mongodb": "nodemon src/examples/try-mongodb/index.ts",
+        "try:mysql": "nodemon src/examples/try-mysql/index.ts"
     },
     "keywords": [],
     "author": "",
@@ -32,6 +33,7 @@
         "mongodb": "^5.8.1",
         "mysql2": "^3.6.0",
         "nodemailer": "^6.9.4",
+        "redis": "^4.6.8",
         "smtp-server": "^3.13.0",
         "ws": "^8.13.0"
     }

@@ -1,5 +1,21 @@
-import { Database, DatabaseOperation } from '../../shared/mysql.utils';
+import { TableOperation, database } from '../../shared/mysql.utils';
 
-class UserService extends DatabaseOperation {}
+export interface User {
+    id?: number;
+    name: string;
+    email: string;
+    isEmailVerified: boolean;
+}
 
-export default new UserService(Database.connection, Database.dbName, 'users');
+const tableSchema = `
+CREATE TABLE users (
+    id int NOT NULL AUTO_INCREMENT,
+    name VARCHAR(20) NOT NULL,
+    email VARCHAR(20) NOT NULL,
+    isEmailVerified BOOLEAN,
+    PRIMARY KEY (id)
+);`;
+
+class UserService<T extends object> extends TableOperation<T> {}
+
+export default new UserService<User>(database, 'users', tableSchema);

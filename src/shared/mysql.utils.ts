@@ -1,10 +1,14 @@
 import { Connection, createConnection } from 'mysql2/promise';
 
-export class Database {
-    private static _connection?: Connection;
-    static dbName: string;
+export class DatabaseOperation {
+    private _connection?: Connection;
+    dbName?: string;
 
-    static async connect(name: string) {
+    async connect(name: string) {
+        if (this._connection) {
+            await this._connection.ping();
+            return;
+        }
         this._connection = await createConnection({
             host: 'localhost',
             user: 'root',
@@ -14,16 +18,32 @@ export class Database {
         this.dbName = name;
     }
 
-    static disconnect() {
-        return this._connection?.end();
+    execute(query: string) {
+        if (this._connection) {
+            return this._connection.execute(query);
+        }
+
+        throw new Error('DB Not Connected');
     }
 
-    static get connection() {
+    disconnect() {
+        if (this._connection) {
+            const _conn = this._connection;
+            this._connection = undefined;
+            this.dbName = undefined;
+            return _conn.end();
+        }
+        throw new Error('DB Not Connected');
+    }
+
+    get connection() {
         if (this._connection) return this._connection;
 
         throw new Error('DB Not Connected');
     }
 }
+
+export const database = new DatabaseOperation();
 
 interface DatabaseOperationOptions {
     page?: number;
@@ -34,22 +54,48 @@ interface DatabaseOperationOptions {
     searchField?: 'name' | 'email' | 'id';
 }
 
-export class DatabaseOperation {
-    private _tableName: string | undefined;
-    private _connection: Connection;
-    private _dbName: string;
-    constructor(connection: Connection, dbName: string, table: string) {
-        this._connection = connection;
-        this._dbName = dbName;
+export class TableOperation<T extends object> {
+    protected _tableName: string;
+    protected _database: DatabaseOperation;
+    protected _tableSchema?: string;
+    constructor(database: DatabaseOperation, table: string, tableSchema?: string) {
+        this._database = database;
         this._tableName = table;
+        this._tableSchema = tableSchema;
+        // this._createTable();
     }
 
-    private _execute(query: string) {
-        return this._connection.execute(query);
+    private async _execute(query: string): Promise<any> {
+        const [result] = await this._database.execute(query);
+
+        return result;
     }
 
-    getMany(options?: DatabaseOperationOptions) {
-        let query = `SELECT * FROM ${this._dbName}.${this._tableName}`;
+    private async _createTable() {
+        if (this._tableSchema) {
+            const createdTable = await this.getTable();
+            if (createdTable) {
+                return true;
+            }
+            await this._database.execute(this._tableSchema);
+            return true;
+        }
+    }
+
+    async getTable() {
+        try {
+            return await this._execute(`describe ${this._tableName};`);
+        } catch (error) {
+            return null;
+        }
+    }
+
+    setup() {
+        return this._createTable();
+    }
+
+    getMany(options?: DatabaseOperationOptions): Promise<Partial<T[]>> {
+        let query = `SELECT * FROM ${this._database.dbName}.${this._tableName}`;
         if (options?.searchText && options.searchField) {
             const { searchText, searchField } = options;
             query += ` WHERE ${searchField} LIKE '%${searchText}%'`;
@@ -65,17 +111,22 @@ export class DatabaseOperation {
         return this._execute(query);
     }
 
-    getOne(filter: any) {
-        let query = `SELECT * FROM ${this._dbName}.${this._tableName}`;
-        query += `LIMIT 1`;
+    getOne(filter = {}): Promise<Partial<T>> {
+        let query = `SELECT * FROM ${this._database.dbName}.${this._tableName}`;
+        query += ` LIMIT 1`;
 
         return this._execute(query);
     }
 
-    insertOne(data: object) {
+    insertOne(data: T) {
         const columns = Object.keys(data).join(', ');
-        const values = Object.values(data).join("', '");
-        const query = `INSERT INTO ${this._dbName}.${this._tableName} (${columns}) VALUES ('${values}');`;
+        let values = '';
+        Object.values(data).forEach((_v) => (values += typeof _v === 'string' ? `'${_v}',` : `${_v},`));
+        if (values.endsWith(',')) {
+            values = values.slice(0, values.length - 1);
+        }
+
+        const query = `INSERT INTO ${this._database.dbName}.${this._tableName} (${columns}) VALUES (${values});`;
 
         return this._execute(query);
     }
@@ -86,7 +137,7 @@ export class DatabaseOperation {
         }
         const columns = Object.keys(data[0]).join(', ');
         const values = data.map((v) => Object.values(v).join("', '")).join("'), ('");
-        const query = `INSERT INTO ${this._dbName}.${this._tableName} (${columns}) VALUES ('${values}');`;
+        const query = `INSERT INTO ${this._database.dbName}.${this._tableName} (${columns}) VALUES ('${values}');`;
 
         return this._execute(query);
     }

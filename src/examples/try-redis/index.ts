@@ -1,4 +1,4 @@
-import redisDB from './redis.db';
+import redisDB from '../../shared/redis.utils';
 
 async () => {
     await redisDB.hSetValue('1', 'name', 'rohan');

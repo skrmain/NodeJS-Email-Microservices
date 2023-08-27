@@ -34,7 +34,7 @@ export class Database {
     }
 }
 
-export class DatabaseOperation<T extends Document> {
+export class CollectionOperation<T extends Document> {
     private _collection: Collection<T>;
     constructor(collection: Collection<T>) {
         this._collection = collection;

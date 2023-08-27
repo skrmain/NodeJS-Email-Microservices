@@ -1,6 +1,5 @@
 import { createClient, RedisClientType } from 'redis';
-
-const REDIS_URL = process.env.REDIS_URL || '';
+import { REDIS_URL } from '../config';
 
 interface SetValueParams {
     key: string;
